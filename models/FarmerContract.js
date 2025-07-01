@@ -1,0 +1,35 @@
+const mongoose = require("mongoose");
+
+const farmerContractSchema = new mongoose.Schema({
+  farmerContractStatus: String,
+  farmerName: String,
+  farmerId: String,
+  farmerContractId: String,
+  streetAddress: String,
+  state: String,
+  country: String,
+  postcode: String,
+  emailContact: String,
+  phoneContact: String,
+  port: String,
+  broker: String,
+  brokerContractId: String,
+  productSelection: String,
+  product: String,
+  productGradingGTA: String,
+  specificationAndValue: String,
+  ngr: String,
+  packingSite: String,
+  bidDate: String,
+  sellDate: String,
+  sellPrice: Number,
+  sellQuantityMetricTonnes: Number,
+  sellQuantityContainers: Number,
+  allocatedContainers: Number,
+  balanceContainers: Number,
+  calculateBalanceContainers: String,
+  monthOfShipment: String,
+  uploadDocument: String,
+}, { timestamps: true });
+
+module.exports = mongoose.model("FarmerContract", farmerContractSchema);

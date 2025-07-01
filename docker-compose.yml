@@ -1,0 +1,8 @@
+version: '3.8'
+ 
+services:
+  arya_pulses_nodejs_backend:
+    container_name: arya_pulses
+    build: .
+    ports:
+      - "5000:5000"
