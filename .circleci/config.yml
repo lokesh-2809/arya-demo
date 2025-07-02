@@ -1,11 +1,10 @@
-# This config was automatically generated from your source code
-# Stacks detected: deps:node:.
 version: 2.1
+
 orbs:
   node: circleci/node@5
+
 jobs:
   test-node:
-    # Install node dependencies and run tests
     executor: node/default
     steps:
       - checkout
@@ -13,20 +12,33 @@ jobs:
           pkg-manager: npm
       - run:
           name: Run tests
-          command: echo \"No test specified in package.json\"
+          command: echo "No tests defined"
+
   deploy:
-    # This is an example deploy job, not actually used by the workflow
     docker:
       - image: cimg/base:stable
     steps:
-      # Replace this with steps to deploy to users
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:asOG2RzLEMrW/aakiDr/z4qUm0OQ/FCxXBLd8paFyls"  # Replace with actual fingerprint
       - run:
-          name: deploy
-          command: '#e.g. ./deploy.sh'
+          name: Deploy with Docker
+          command: |
+            ssh -o StrictHostKeyChecking=no ec2-user@13.201.20.162 << EOF
+              cd /home/ec2-user/arya-pulses   # Update path if different
+              git pull origin main
+              docker-compose down
+              docker-compose build
+              docker-compose up -d
+            EOF
+
 workflows:
-  build-and-test:
+  build-and-deploy:
     jobs:
       - test-node
-    # - deploy:
-    #     requires:
-    #       - test-node
+      - deploy:
+          requires:
+            - test-node
+          filters:
+            branches:
+              only: main
