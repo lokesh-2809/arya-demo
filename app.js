@@ -64,7 +64,7 @@ app.use("/api/shipmentbooking", shipmentBooking)
 
 // Test route
 app.get('/api/test', (req, res) => {
-  res.send('API is live');
+  res.send('API is live and testing successful!');
 });
 
 
