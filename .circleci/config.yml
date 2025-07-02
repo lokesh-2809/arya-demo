@@ -24,10 +24,17 @@ jobs:
       - run:
           name: Deploy with Docker
           command: |
-            ssh -o StrictHostKeyChecking=no ec2-user@13.201.20.162 \<< 'EOF'
-              set -e  # Exit on error
+            ssh -o StrictHostKeyChecking=no ec2-user@13.201.20.162 << 'EOF'
+              set -e  # Exit on any error
 
-              cd /home/ec2-user/arya-demo || git clone https://github.com/lokesh-2809/arya-demo.git && cd arya-demo
+              cd /home/ec2-user
+
+              if [ ! -d "arya-demo" ]; then
+                echo "📦 Cloning repo..."
+                git clone https://github.com/lokesh-2809/arya-demo.git
+              fi
+
+              cd arya-demo
 
               echo "📥 Pulling latest code..."
               git pull origin main
