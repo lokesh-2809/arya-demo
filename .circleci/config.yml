@@ -24,7 +24,7 @@ jobs:
       - run:
           name: Deploy with Docker
           command: |
-            ssh -o StrictHostKeyChecking=no ec2-user@13.201.20.162 << EOF
+            ssh -o StrictHostKeyChecking=no ec2-user@13.201.20.162 \<< EOF
               cd /home/ec2-user/arya-pulses   # Update path if different
               git pull origin main
               docker-compose down
