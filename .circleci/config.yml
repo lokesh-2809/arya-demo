@@ -21,38 +21,41 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "SHA256:asOG2RzLEMrW/aakiDr/z4qUm0OQ/FCxXBLd8paFyls"  # Replace with your actual fingerprint
-      - run:
-          name: Deploy with Docker
-          command: |
-            ssh -o StrictHostKeyChecking=no ec2-user@13.201.77.112 \<< 'EOF'
-              set -e  # Exit on any error
+    - run:
+    name: Deploy with Docker
+    command: |
+      ssh -o StrictHostKeyChecking=no ec2-user@13.201.77.112 \<< 'EOF'
+        set -e  # Exit on any error
 
-              cd /home/ec2-user
+        cd /home/ec2-user
 
-              if [ ! -d "arya-demo" ]; then
-                echo "📦 Cloning repo..."
-                git clone https://github.com/lokesh-2809/arya-demo.git
-              fi
+        if [ ! -d "arya-demo" ]; then
+          echo "📦 Cloning repo..."
+          git clone https://github.com/lokesh-2809/arya-demo.git
+        fi
 
-              cd arya-demo
+        cd arya-demo
 
-              echo "📥 Pulling latest code..."
-              git pull origin main
+        echo "📥 Resetting to latest code from main..."
+        git fetch origin main
+        git reset --hard origin/main
+        git clean -fd
 
-              echo "🧹 Stopping and removing existing container if exists..."
-              docker stop arya_pulses || true
-              docker rm arya_pulses || true
+        echo "🧹 Stopping and removing existing container if exists..."
+        docker stop arya_pulses || true
+        docker rm arya_pulses || true
 
-              echo "🧼 Cleaning up network (optional)..."
-              docker network rm arya-demo_default || true
+        echo "🧼 Cleaning up Docker network (optional)..."
+        docker network rm arya-demo_default || true
 
-              echo "🛠️ Rebuilding and restarting containers..."
-              docker-compose down --remove-orphans
-              docker-compose build
-              docker-compose up -d
+        echo "🛠️ Rebuilding and restarting containers..."
+        docker-compose down --remove-orphans
+        docker-compose build --no-cache
+        docker-compose up -d --remove-orphans
 
-              echo "✅ Deployment finished successfully"
-            EOF
+        echo "✅ Deployment finished successfully"
+      EOF
+
 
 workflows:
   build-and-deploy:
