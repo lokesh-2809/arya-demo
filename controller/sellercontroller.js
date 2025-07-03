@@ -1,4 +1,5 @@
-import Seller from "../models/seller.js"; // ✅ ADD `.js` extension
+// import Seller from "../models/seller.js"; // ✅ ADD `.js` extension
+const Seller = require("../models/seller"); // ✅ ADD `.js` extension
 
 // CREATE
 export const createSeller = async (req, res) => {
