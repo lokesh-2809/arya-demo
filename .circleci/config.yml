@@ -24,7 +24,7 @@ jobs:
       - run:
           name: Deploy with Docker
           command: |
-            ssh -o StrictHostKeyChecking=no ec2-user@13.201.20.162 \<< 'EOF'
+            ssh -o StrictHostKeyChecking=no ec2-user@13.201.77.112 \<< 'EOF'
               set -e  # Exit on any error
 
               cd /home/ec2-user
