@@ -21,7 +21,7 @@ jobs:
       - add_ssh_keys:
           fingerprints:
             - "SHA256:asOG2RzLEMrW/aakiDr/z4qUm0OQ/FCxXBLd8paFyls"  # Replace with your actual fingerprint
-    - run:
+      - run:
     name: Deploy with Docker
     command: |
       ssh -o StrictHostKeyChecking=no ec2-user@13.201.77.112 \<< 'EOF'
