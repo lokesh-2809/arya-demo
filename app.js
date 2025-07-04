@@ -90,7 +90,7 @@ app.use(express.json());
 
 // Test route only
 app.get('/api/test', (req, res) => {
-  res.send('✅ API is live and testing successfully!');
+  res.send('✅ API is live and testing successfully and good!');
 });
 
 // Start server
