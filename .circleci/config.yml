@@ -20,12 +20,12 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "SHA256:asOG2RzLEMrW/aakiDr/z4qUm0OQ/FCxXBLd8paFyls"  # Replace with your actual fingerprint
+            - "SHA256:asOG2RzLEMrW/aakiDr/z4qUm0OQ/FCxXBLd8paFyls"
       - run:
           name: Deploy with Docker
           command: |
-            ssh -o StrictHostKeyChecking=no ec2-user@13.203.204.214 \<< 'EOF'
-              set -e  # Exit on any error
+            ssh -o StrictHostKeyChecking=no ec2-user@13.203.204.214 << 'EOF'
+              set -e
 
               cd /home/ec2-user
 
@@ -43,7 +43,7 @@ jobs:
 
               echo "🧹 Stopping and removing existing container if exists..."
               docker stop arya_pulses || true
-              docker ps -aq --filter "name=arya_pulses" | xargs -r docker rm -f
+              docker rm -f arya_pulses || true
 
               echo "🧼 Cleaning up Docker network (optional)..."
               docker network rm arya-demo_default || true
